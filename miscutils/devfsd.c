@@ -245,8 +245,6 @@ static char get_old_ide_name (unsigned , unsigned);
 static char *write_old_sd_name (char *, unsigned, unsigned, char *);
 
 /* busybox functions */
-static void msg_logger(int pri, const char * fmt, ... )__attribute__ ((format (printf, 2, 3)));
-static void msg_logger_and_die(int pri, const char * fmt, ... )__attribute__ ((noreturn, format (printf, 2, 3)));
 static void do_ioctl_and_die(int fd, int request, unsigned long event_mask_flag);
 static void fork_and_execute(int die, char *arg0, char **arg );
 static int get_uid_gid ( int, const char *);
@@ -298,35 +296,6 @@ static const char * const bb_msg_small_buffer		= "buffer too small";
 static const char * const bb_msg_variable_not_found = "variable: %s not found";
 
 /* Busybox functions  */
-static void msg_logger(int pri, const char * fmt, ... )
-{
-	va_list ap;
-	int ret;
-
-	va_start(ap, fmt);
-	ret = access ("/dev/log", F_OK);
-	if (ret == 0) {
-		openlog(applet_name, 0, LOG_DAEMON);
-		vsyslog( pri , fmt, ap);
-		/* Man: A trailing newline is added when needed. */
-		closelog();
-	}
-	/* ENABLE_DEVFSD_VERBOSE is always enabled if msg_logger is used */
-	if ((ENABLE_DEVFSD_VERBOSE && ret) || ENABLE_DEBUG) {
-		bb_error_msg(fmt, ap);
-	}
-	va_end(ap);
-}
-
-static void msg_logger_and_die(int pri, const char* fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	msg_logger(pri, fmt, ap);
-	va_end(ap);
-	exit(EXIT_FAILURE);
-}
 
 /* Busybox stuff */
 #if defined(CONFIG_DEVFSD_VERBOSE) || defined(CONFIG_DEBUG)

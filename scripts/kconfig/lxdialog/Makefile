@@ -10,12 +10,14 @@ HOST_LOADLIBES   = $(shell $(CONFIG_SHELL) $(check-lxdialog) -ldflags $(HOSTCC))
 
 HOST_EXTRACFLAGS += -DLOCALE
 
-PHONY += dochecklxdialog
-$(obj)/dochecklxdialog:
-	$(Q)$(CONFIG_SHELL) $(check-lxdialog) -check $(HOSTCC) $(HOST_LOADLIBES)
+#PHONY += dochecklxdialog
+#$(obj)/dochecklxdialog:
+#	$(Q)$(CONFIG_SHELL) $(check-lxdialog) -check $(HOSTCC) $(HOST_LOADLIBES)
 
 hostprogs-y	:= lxdialog
-always		:= $(hostprogs-y) dochecklxdialog
+#always		:= $(hostprogs-y) dochecklxdialog
+always		:= $(hostprogs-y)
+
 
 lxdialog-objs := checklist.o menubox.o textbox.o yesno.o inputbox.o \
 		 util.o lxdialog.o msgbox.o

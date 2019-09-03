@@ -299,7 +299,9 @@ AFLAGS_KERNEL	=
 
 # Use LINUXINCLUDE when you must reference the include/ directory.
 # Needed to be compatible with the O= option
-CFLAGS		:=
+CFLAGS		:= 
+# The following line may be neccessary or not...
+#CFLAGS		:= -fgnu89-inline
 CPPFLAGS	:=
 AFLAGS		:=
 
